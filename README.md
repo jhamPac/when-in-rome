@@ -1,2 +1,3 @@
-# when-in-rome
+# When in Rome
+
 Roman Numeral Kata 𝌎
