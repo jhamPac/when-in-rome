@@ -2,28 +2,6 @@ package rome
 
 import "strings"
 
-// ConvertToArabic converts Roman Numerals into Arabic
-func ConvertToArabic(roman string) (total int) {
-	for _, symbols := range windowedRoman(roman).Symbols() {
-		total += allRomanNumerals.ValueOf(symbols...)
-	}
-	return
-}
-
-// ConvertToRoman converts Arabic numbers to Roman Numerals
-func ConvertToRoman(arabic int) string {
-	var result strings.Builder
-
-	for _, numeral := range allRomanNumerals {
-		for arabic >= numeral.Value {
-			result.WriteString(numeral.Symbol)
-			arabic -= numeral.Value
-		}
-	}
-
-	return result.String()
-}
-
 type romanNumeral struct {
 	Value  int
 	Symbol string
@@ -69,6 +47,14 @@ var allRomanNumerals = romanNumerals{
 	{1, "I"},
 }
 
+// ConvertToArabic converts Roman Numerals into Arabic
+func ConvertToArabic(roman string) (total int) {
+	for _, symbols := range windowedRoman(roman).Symbols() {
+		total += allRomanNumerals.ValueOf(symbols...)
+	}
+	return
+}
+
 type windowedRoman string
 
 func (w windowedRoman) Symbols() (symbols [][]byte) {
@@ -88,4 +74,18 @@ func (w windowedRoman) Symbols() (symbols [][]byte) {
 
 func isSubtractive(symbol uint8) bool {
 	return symbol == 'I' || symbol == 'X' || symbol == 'C'
+}
+
+// ConvertToRoman converts Arabic numbers to Roman Numerals
+func ConvertToRoman(arabic int) string {
+	var result strings.Builder
+
+	for _, numeral := range allRomanNumerals {
+		for arabic >= numeral.Value {
+			result.WriteString(numeral.Symbol)
+			arabic -= numeral.Value
+		}
+	}
+
+	return result.String()
 }
