@@ -10,7 +10,8 @@ type romanNumeral struct {
 type romanNumerals []romanNumeral
 
 // ValueOf returns the value the iteration is currently on
-func (r romanNumerals) ValueOf(symbol string) int {
+func (r romanNumerals) ValueOf(symbols ...byte) int {
+	symbol := string(symbols)
 	for _, s := range r {
 		if s.Symbol == symbol {
 			return s.Value
@@ -58,18 +59,15 @@ func ConvertToArabic(roman string) int {
 		symbol := roman[i]
 
 		if couldBeSubtractive(i, symbol, roman) {
-			nextSymbol := roman[i+1]
 
-			potentialNumber := string([]byte{symbol, nextSymbol})
-
-			if value := allRomanNumerals.ValueOf(potentialNumber); value != 0 {
+			if value := allRomanNumerals.ValueOf(symbol, roman[i+1]); value != 0 {
 				total += value
 				i++
 			} else {
 				total++
 			}
 		} else {
-			total += allRomanNumerals.ValueOf(string([]byte{symbol}))
+			total += allRomanNumerals.ValueOf(symbol)
 		}
 	}
 
