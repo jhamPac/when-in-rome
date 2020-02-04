@@ -11,9 +11,9 @@ type romanNumerals []romanNumeral
 
 func (r romanNumerals) ValueOf(symbols ...byte) uint16 {
 	symbol := string(symbols)
-	for _, s := range r {
-		if s.Symbol == symbol {
-			return s.Value
+	for _, x := range r {
+		if x.Symbol == symbol {
+			return x.Value
 		}
 	}
 
@@ -22,8 +22,8 @@ func (r romanNumerals) ValueOf(symbols ...byte) uint16 {
 
 func (r romanNumerals) Exists(symbols ...byte) bool {
 	symbol := string(symbols)
-	for _, s := range r {
-		if s.Symbol == symbol {
+	for _, x := range r {
+		if x.Symbol == symbol {
 			return true
 		}
 	}
@@ -52,7 +52,7 @@ func ConvertToArabic(roman string) (total uint16) {
 	for _, symbols := range windowedRoman(roman).Symbols() {
 		total += allRomanNumerals.ValueOf(symbols...)
 	}
-	return
+	return total
 }
 
 type windowedRoman string
